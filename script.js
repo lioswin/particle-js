@@ -42,8 +42,8 @@ const ctx = canvas.getContext("2d");
     draw(){
         ctx.fillStyle ='white';
         ctx.beginPath();
-        ctx.ard(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closedPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
         ctx.fill();
     }
  }
@@ -51,8 +51,13 @@ const ctx = canvas.getContext("2d");
 
  function init(){
     particleArray = [];
-    particleArray.push(new Particle(50,50));
-    particleArray.push(new Particle(80,50));
+    for (let i = 0;i<10;i++){
+      let x = Math.random() * canvas.width;
+      let y = Math.random() * canvas.height;
+      particleArray.push(new Particle(x,y));
+    }
+    // particleArray.push(new Particle(50,50));
+    // particleArray.push(new Particle(80,50));
  }
  init();
  console.log(particleArray);
@@ -65,4 +70,4 @@ const ctx = canvas.getContext("2d");
     }
     requestAnimationFrame(animate);
  }
- animate
+ animate();
