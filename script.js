@@ -4,6 +4,8 @@ const ctx = canvas.getContext("2d");
  canvas.height = window.innerHeight;
 
  let particleArray = [];
+ let adjustX = 0;
+ let adjustY = 0;
 
  //handle mouse interaction
 
@@ -23,7 +25,7 @@ const ctx = canvas.getContext("2d");
 
  ctx.fillStyle = "white";
  ctx.font = "30px Verdana";
- ctx.fillText('A',0,30);
+ ctx.fillText('TNR',0,30);
 
 
  const textCoordinates = ctx.getImageData(0, 0, 100, 100);
@@ -85,9 +87,9 @@ const ctx = canvas.getContext("2d");
 for (let y=0 ,y2= textCoordinates.height; y < y2; y++){
     for(let x = 0,x2 = textCoordinates.width; x < x2; x++){
        if(textCoordinates.data[(y * 4 * textCoordinates.width) +( x *4) + 3]> 128){
-        let positionX = x;
-        let positionY = y;
-        particleArray.push(new Particle(positionX *10,positionY * 10));
+        let positionX = x + adjustX;
+        let positionY = y + adjustY;
+        particleArray.push(new Particle(positionX *20,positionY * 20));
        }
     }
 }
@@ -104,6 +106,29 @@ for (let y=0 ,y2= textCoordinates.height; y < y2; y++){
         particleArray[i].draw();
         particleArray[i].update();
     }
+    connect();
     requestAnimationFrame(animate);
  }
  animate();
+
+ function connect(){
+    let opacityValue = 1;
+    for ( let a = 0; a< particleArray.length; a++){
+for(let b=a; b< particleArray.length;b++){
+    //this. up
+         let dx = particleArray[a].x - particleArray[b].x;
+         let dy = particleArray[a].y - particleArray[b].y;
+         let distance = Math.sqrt(dx * dx + dy* dy);
+         opacityValue = 1 - ( distance/50);
+         ctx.strokeStyle = 'rgba(255,255,255,' + opacityValue + ')';
+         if(distance < 5){
+          
+            ctx.lineWidth  = 2;
+            ctx.beginPath();
+            ctx.moveTo(particleArray[a].x, particleArray[a].y);
+            ctx.lineTo(particleArray[b].x,particleArray[b].y);
+            ctx.stroke()
+         }
+      }
+    }
+ }
