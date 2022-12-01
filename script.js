@@ -17,7 +17,7 @@ const ctx = canvas.getContext("2d");
  window.addEventListener('mousemove',function(event){
     mouse.x = event.x;
     mouse.y = event.y;
-    console.log(mouse.x, mouse.y);
+    //console.log(mouse.x, mouse.y);
  });
 
 
@@ -47,3 +47,22 @@ const ctx = canvas.getContext("2d");
         ctx.fill();
     }
  }
+
+
+ function init(){
+    particleArray = [];
+    particleArray.push(new Particle(50,50));
+    particleArray.push(new Particle(80,50));
+ }
+ init();
+ console.log(particleArray);
+
+
+ function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0;i< particleArray.length; i++){
+        particleArray[i].draw()
+    }
+    requestAnimationFrame(animate);
+ }
+ animate
