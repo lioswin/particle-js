@@ -37,5 +37,6 @@ const ctx = canvas.getContext("2d");
         this.size = 3;
         this.baseX = this.x;
         this.baseY = this.y;
+        this.density = (Math.random()* 30) + 1;
     }
  }
